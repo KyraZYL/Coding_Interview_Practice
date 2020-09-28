@@ -1,0 +1,19 @@
+package sliding_window;
+
+import java.util.*;
+
+public class LongSubstrSame {
+	public static int findLength(String str, int k) {
+		int chance = k;
+		int start = 0;
+		int maxLen = 0
+		Map<Character, Integer> f = new HashMap<>();
+		for (int end = 0; end < str.length(); end ++) {
+			f.put(str.charAt(end), end);
+			if (f.size()>3) {
+				start = 1;
+			}
+		}
+		return -1;
+	}
+}

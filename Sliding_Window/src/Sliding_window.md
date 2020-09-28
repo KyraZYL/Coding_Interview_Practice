@@ -206,10 +206,35 @@ public static int findLengthMap(char[] arr) {
 > Given a string, find the length of the longest substring which has no repeating characters.
 
 ``` java
-    
+public static int findLength(String s) {
+    int maxLen = 0;
+    Map<Character, Integer> sm = new HashMap<>(); 
+    // we store the character and the position of the character in the string
+    int start = 0;
+    for (int end = 0; end < s.length();end ++) {
+        if (sm.containsKey(s.charAt(end))) {
+            start = Math.max(start, sm.get(s.charAt(end))+1);
+        }
+        sm.put(s.charAt(end),end);
+        maxLen = maxLen < end-start+1?end-start+1:maxLen;
+    }
+    return maxLen;
+    }
 ```
+1. Time complexity
+>   * O(N) where N is the number of characters in the input string
+2. Space complexity
+>   * O(K) where K is the number of distinct characters in the input string
+>   * K <= N as the worst case is that the whole string might not have any repeating character so the entire string will be added to the HashMap.   * 
+>   * Since we can expect a fixed set of characters in the input string (i.e., 26 for English letters), our algorithm runs in fixed space O(1).
+>   * In thi case, we can use a fixed-size array instead of the HashMap.
 
+## Example question 7 - Longest Substring with Same Letters after Replacement
+> Given a string with lowercase letters only, if you are allowed to replace no more than ‘k’ letters with any letter, find the length of the longest substring having the same letters after replacement.
 
+``` java
+
+```
 
 
 

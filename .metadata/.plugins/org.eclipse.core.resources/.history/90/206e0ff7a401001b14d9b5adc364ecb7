@@ -1,0 +1,30 @@
+package sliding_window;
+
+import java.util.*;
+
+public class LongSubstrSame {
+	public static int findLength(String str, int k) {
+		int maxRepeat = 0;
+		int start = 0;
+		int maxLen = 0;
+		Map<Character, Integer> f = new HashMap<>();
+		for (int end = 0; end < str.length(); end ++) {
+			char ch = str.charAt(end);
+			f.put(ch, f.getOrDefault(ch,0)+1);
+			maxRepeat = Math.max(maxRepeat, f.get(ch));
+			if (end-start>maxRepeat+k-1) {
+				System.out.println(f.toString());
+				ch = str.charAt(start);
+				f.put(ch,f.get(ch)-1);
+				start ++;
+			}
+			maxLen = Math.max(maxLen, end-start+1);
+		}
+		return maxLen;
+	}
+	
+	public static void main(String[] args) {
+		int res = findLength("aabccbb",2);
+		System.out.println(res);
+	}
+}

@@ -1,0 +1,25 @@
+package sliding_window;
+
+import java.util.*;
+
+public class LongestSubNoRepeats {
+	public static int findLength(String s) {
+		int maxLen = 0;
+		Map<Character, Integer> sm = new HashMap<>();
+		int start = 0;
+		for (int end = 0; end < s.length();end ++) {
+			if (sm.containsKey(s.charAt(end))) {
+				start = end;
+				sm.clear();
+			}
+			sm.put(s.charAt(end), sm.getOrDefault(s.charAt(end), 0)+1);
+			maxLen = maxLen < sm.size()?sm.size():maxLen;
+		}
+		return maxLen;
+	}
+	
+	public static void main(String[] args) {
+		int res = findLength("abccde");
+		System.out.println(res);
+	}
+}
