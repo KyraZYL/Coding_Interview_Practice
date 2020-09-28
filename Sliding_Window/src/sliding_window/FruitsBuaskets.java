@@ -1,0 +1,67 @@
+package sliding_window;
+
+/*
+ * Given an array of characters where each character represents a fruit tree, 
+ * you are given two baskets and your goal is to put maximum number of fruits in each basket. 
+ * The only restriction is that each basket can have only one type of fruit.
+ * 
+ * You can start with any tree, but once you have started you can’t skip a tree. 
+ * You will pick one fruit from each tree until you cannot, 
+ * i.e., you will stop when you have to pick from a third fruit type.
+ */
+
+import java.util.*;
+
+public class FruitsBuaskets {
+	public static int findLength(char[] arr) {
+		int start = 0;
+		int len = 0;
+		int maxLen = -1;
+		int disT = 0;
+		int[] flag = new int[26];
+		for (int end=0;end<arr.length;end++) {
+			int ch = (int) arr[end] - (int) 'A';
+			if (flag[ch]==0) {
+				disT ++;
+			}
+			flag[ch] ++;
+			len ++;
+			while (disT>2) {
+				ch = (int) arr[start] - (int) 'A';
+				flag[ch] --;
+				if (flag[ch]==0) {
+					disT --;
+				}
+				len --;
+				start ++;
+			}
+			maxLen = maxLen < len?len:maxLen;
+		}
+		return maxLen;
+	}
+	
+	public static int findLengthMap(char[] arr) {
+		Map<Character, Integer> fm = new HashMap<>();
+		int start = 0;
+		int maxLen = -1;
+		for (int end=0;end<arr.length;end++) {
+			fm.put(arr[end], fm.getOrDefault(arr[end], 0)+1);
+			while (fm.size()>2) {
+				fm.put(arr[start], fm.get(arr[start])-1);
+				if (fm.get(arr[start])==0) {
+					fm.remove(arr[start]);
+				}
+				start ++;
+			}
+			maxLen = maxLen < end-start+1?end-start+1:maxLen;
+		}
+		return maxLen;
+	}
+	
+	public static void main(String[] args) {
+		int res = findLength(new char[] {'A','B','C','B', 'B','C'});
+		System.out.println("The res: "+res);
+		res = findLengthMap(new char[] {'A','B','C','B', 'B','C'});
+		System.out.println("The res with MAP: "+res);
+	}
+}
